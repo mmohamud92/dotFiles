@@ -78,3 +78,5 @@ alias c='clear'
 # Shell integrations
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
+alias g++="g++ -std=c++23"
+
