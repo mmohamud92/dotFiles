@@ -2,7 +2,7 @@
 
 My personal dotfiles managed with GNU Stow.
 
-The actual configuration files live in this repository, and symlinks are created in your home directory pointing to them. This means when you edit files in `~/.config/nvim/` or `~/.zshrc`, you're actually editing the files in this repository.
+The actual configuration files live in this repository, and symlinks are created in your home directory pointing to them. This means when you edit files in `~/.config/nvim/`, `~/.zshrc`, or `~/.tmux.conf`, you're actually editing the files in this repository.
 
 ## Prerequisites
 
@@ -35,16 +35,37 @@ cd ~/dotfiles
 # Then create symlinks:
 stow zsh
 stow nvim
+stow tmux
 ```
 
 This will create symlinks from your home directory to the files in this repository:
 - `~/.zshrc` → `~/dotfiles/zsh/.zshrc`
 - `~/.config/nvim` → `~/dotfiles/nvim/.config/nvim`
+- `~/.tmux.conf` → `~/dotfiles/tmux/.tmux.conf`
+- `~/.tmux` → `~/dotfiles/tmux/.tmux`
 
 ## What's Included
 
 - **zsh**: Zsh configuration (`.zshrc`)
 - **nvim**: Neovim configuration (`.config/nvim/`)
+- **tmux**: Tmux configuration (`.tmux.conf` and `.tmux/`)
+
+## Tmux Setup
+
+After installing the dotfiles, you need to install the Tmux Plugin Manager (TPM):
+
+```bash
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+```
+
+Then reload your tmux configuration:
+```bash
+tmux source ~/.tmux.conf
+```
+
+Or if you're already in a tmux session, press `Ctrl-a + r` (or your configured prefix + r) to reload the config.
+
+After TPM is installed, install the plugins by pressing `prefix + I` (capital I) in tmux.
 
 ## Updating
 
@@ -64,10 +85,12 @@ Since files are symlinked, you can edit them in either location:
 1. **Edit files** in their normal locations (they're symlinks):
    - `~/.config/nvim/` for Neovim
    - `~/.zshrc` for Zsh
+   - `~/.tmux.conf` for Tmux
    
    Or edit directly in the dotfiles repo:
    - `~/dotfiles/nvim/.config/nvim/`
    - `~/dotfiles/zsh/.zshrc`
+   - `~/dotfiles/tmux/.tmux.conf`
 
 2. **Commit and push** changes:
    ```bash
@@ -90,6 +113,9 @@ stow zsh       # Relink
 
 stow -D nvim   # Unlink
 stow nvim      # Relink
+
+stow -D tmux   # Unlink
+stow tmux      # Relink
 ```
 
 Or use the install script again (it will handle backups).

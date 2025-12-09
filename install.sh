@@ -35,6 +35,18 @@ if [ -d "$HOME/.config/nvim" ] && [ ! -L "$HOME/.config/nvim" ]; then
     rm -rf "$HOME/.config/nvim"
 fi
 
+if [ -f "$HOME/.tmux.conf" ] && [ ! -L "$HOME/.tmux.conf" ]; then
+    echo "Backing up existing ~/.tmux.conf to ~/.tmux.conf.backup"
+    cp "$HOME/.tmux.conf" "$HOME/.tmux.conf.backup"
+fi
+
+if [ -d "$HOME/.tmux" ] && [ ! -L "$HOME/.tmux" ]; then
+    echo "Backing up existing ~/.tmux to ~/.tmux.backup"
+    cp -r "$HOME/.tmux" "$HOME/.tmux.backup"
+    echo "Removing ~/.tmux (will be replaced with symlinks)"
+    rm -rf "$HOME/.tmux"
+fi
+
 # Create .config directory if it doesn't exist
 mkdir -p "$HOME/.config"
 
@@ -43,6 +55,7 @@ echo ""
 echo "Creating symlinks with stow..."
 stow -v zsh
 stow -v nvim
+stow -v tmux
 
 echo ""
 echo "✓ Dotfiles installed successfully!"
@@ -50,9 +63,15 @@ echo ""
 echo "Your files are now symlinked:"
 echo "  ~/.zshrc → ~/dotfiles/zsh/.zshrc"
 echo "  ~/.config/nvim → ~/dotfiles/nvim/.config/nvim"
+echo "  ~/.tmux.conf → ~/dotfiles/tmux/.tmux.conf"
+echo "  ~/.tmux → ~/dotfiles/tmux/.tmux"
+echo ""
+echo "Note: After installation, install TPM for tmux:"
+echo "  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm"
 echo ""
 echo "To uninstall, run:"
 echo "  cd ~/dotfiles"
 echo "  stow -D zsh"
 echo "  stow -D nvim"
+echo "  stow -D tmux"
 
