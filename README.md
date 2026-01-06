@@ -3,6 +3,7 @@
 My personal dotfiles managed with GNU Stow.
 
 The actual configuration files live in this repository, and symlinks are created in your home directory pointing to them. This means when you edit files in `~/.config/nvim/`, `~/.zshrc`, or `~/.tmux.conf`, you're actually editing the files in this repository.
+The same applies to `~/.config/kitty/`.
 
 ## Prerequisites
 
@@ -12,6 +13,9 @@ Install the following via Homebrew:
 brew install stow
 brew install pkg-config
 brew install imagemagick
+brew install --cask kitty
+brew install --cask keymapp
+brew install --cask shottr
 ```
 
 ## Installation
@@ -35,12 +39,14 @@ cd ~/dotfiles
 # Then create symlinks:
 stow zsh
 stow nvim
+stow kitty
 stow tmux
 ```
 
 This will create symlinks from your home directory to the files in this repository:
 - `~/.zshrc` → `~/dotfiles/zsh/.zshrc`
 - `~/.config/nvim` → `~/dotfiles/nvim/.config/nvim`
+- `~/.config/kitty` → `~/dotfiles/kitty/.config/kitty`
 - `~/.tmux.conf` → `~/dotfiles/tmux/.tmux.conf`
 - `~/.tmux` → `~/dotfiles/tmux/.tmux`
 
@@ -48,7 +54,16 @@ This will create symlinks from your home directory to the files in this reposito
 
 - **zsh**: Zsh configuration (`.zshrc`)
 - **nvim**: Neovim configuration (`.config/nvim/`)
+- **kitty**: Kitty configuration (`.config/kitty/`)
 - **tmux**: Tmux configuration (`.tmux.conf` and `.tmux/`)
+
+## Cheatsheets
+
+- [`cheatsheets/cheatsheets.md`](cheatsheets/cheatsheets.md) – index of all cheat sheets.
+- [`cheatsheets/tmux-cheatsheet.md`](cheatsheets/tmux-cheatsheet.md) – custom prefix bindings, pane controls, and TPM workflow reminders.
+- [`cheatsheets/nvim-cheatsheet.md`](cheatsheets/nvim-cheatsheet.md) – leader mappings, Telescope pickers, git/DAP helpers, and motion refreshers.
+- [`cheatsheets/zsh-cheatsheet.md`](cheatsheets/zsh-cheatsheet.md) – reload/keybinds, fzf + zoxide basics, and common aliases/functions.
+- [`cheatsheets/kitty-cheatsheet.md`](cheatsheets/kitty-cheatsheet.md) – tabs/windows, splits, scrollback, and common actions.
 
 ## Tmux Setup
 
@@ -114,6 +129,9 @@ stow zsh       # Relink
 stow -D nvim   # Unlink
 stow nvim      # Relink
 
+stow -D kitty  # Unlink
+stow kitty     # Relink
+
 stow -D tmux   # Unlink
 stow tmux      # Relink
 ```
@@ -127,9 +145,12 @@ The following packages are required:
 - `stow` - Symlink manager for dotfiles
 - `pkg-config` - Required for building `telescope-fzf-native.nvim`
 - `imagemagick` - Required for `image.nvim` plugin (LuaRocks magick package)
+- `kitty` (cask) - GPU-accelerated terminal emulator
+- `keymapp` (cask) - Desktop app for configuring ZSA keyboards
+- `shottr` (cask) - Screenshot/annotation utility for fast screen captures
 
 Install all at once:
 ```bash
 brew install stow pkg-config imagemagick
+brew install --cask kitty keymapp shottr
 ```
-

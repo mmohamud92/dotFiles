@@ -7,17 +7,44 @@ return {
     config = function(_, opts)
         require("dap-go").setup(opts)
 
+        local dap = require("dap")
         local keymap = vim.keymap
 
-        -- DAP mappings
-        keymap.set("n", "<leader>db", "<cmd>DapToggleBreakpoint<CR>", { desc = "Add breakpoint at line" })
-        keymap.set("n", "<leader>dus", function()
-            local widgets = require("dap.ui.widgets")
-            local sidebar = widgets.sidebar(widgets.scopes)
-            sidebar.open()
-        end, { desc = "Open debugging sidebar" })
+        -- Configure Go launch configurations for non-test debugging
+        dap.configurations.go = {
+            {
+                type = "go",
+                name = "Debug",
+                request = "launch",
+                program = "${file}",
+            },
+            {
+                type = "go",
+                name = "Debug with args",
+                request = "launch",
+                program = "${file}",
+                args = function()
+                    local input = vim.fn.input("Args: ")
+                    return vim.split(input, " ", true)
+                end,
+            },
+            {
+                type = "go",
+                name = "Debug test",
+                request = "launch",
+                mode = "test",
+                program = "${file}",
+            },
+            {
+                type = "go",
+                name = "Attach",
+                mode = "local",
+                request = "attach",
+                processId = require("dap.utils").pick_process,
+            },
+        }
 
-        -- DAP Go mappings
+        -- DAP Go specific mappings
         keymap.set("n", "<leader>dgt", function()
             require("dap-go").debug_test()
         end, { desc = "Debug go test" })

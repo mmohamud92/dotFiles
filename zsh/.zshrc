@@ -75,6 +75,12 @@ alias ls='ls --color'
 alias vim='nvim'
 alias c='clear'
 
+# Functions
+mkcd() {
+  [[ -n "$1" ]] || { print "usage: mkcd <dir>"; return 1; }
+  mkdir -p -- "$1" && cd -- "$1"
+}
+
 # Shell integrations
 eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"

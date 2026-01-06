@@ -1,6 +1,11 @@
 return {
-  "kylechui/nvim-surround",
-  event = { "BufReadPre", "BufNewFile" },
-  version = "*", -- Use for stability; omit to use `main` branch for the latest features
-  config = true,
+    "kylechui/nvim-surround",
+    version = "*",
+    event = "VeryLazy",
+    config = function()
+        require("nvim-surround").setup({
+            -- Disable automatic spaces on brackets when changing surrounds
+            space_on_closing_char = false,
+        })
+    end,
 }

@@ -24,3 +24,4 @@ require("lazy").setup({ { import = "plugins" }, { import = "plugins.lsp" } }, {
         notify = false,
     },
 })
+
