@@ -7,17 +7,10 @@ The same applies to `~/.config/kitty/`.
 
 ## Prerequisites
 
-Install the following via Homebrew:
+Install the following via Homebrew (or just run `./install.sh`, which will install these if Homebrew is present):
 
 ```bash
-brew install stow
-brew install pkg-config
-brew install imagemagick
-brew install tmux
-brew install neovim
-brew install gh
-brew install lazygit
-brew install ripgrep
+brew install stow pkg-config imagemagick tmux neovim gh lazygit ripgrep go rust
 brew install --cask kitty
 brew install --cask keymapp
 brew install --cask shottr
@@ -38,6 +31,11 @@ cd ~/dotfiles
 **Option A: Use the install script (recommended)**
 ```bash
 ./install.sh
+```
+
+To also bootstrap Neovim plugins headlessly (so a new machine comes up “ready to go” faster):
+```bash
+BOOTSTRAP_NVIM=1 ./install.sh
 ```
 
 **Option B: Manual installation**
@@ -157,6 +155,8 @@ The following packages are required:
 - `gh` - GitHub CLI (required by `octo.nvim`)
 - `lazygit` - TUI for Git (used by `lazygit.nvim`)
 - `ripgrep` - Fast grep backend (used by Telescope `live_grep`)
+- `go` - Go toolchain (for Go dev tooling / gopls workflows)
+- `rust` - Rust toolchain (`cargo`), used to build `blink.cmp`
 - `kitty` (cask) - GPU-accelerated terminal emulator
 - `keymapp` (cask) - Desktop app for configuring ZSA keyboards
 - `shottr` (cask) - Screenshot/annotation utility for fast screen captures
@@ -165,7 +165,7 @@ The following packages are required:
 
 Install all at once:
 ```bash
-brew install stow pkg-config imagemagick tmux neovim gh lazygit ripgrep
+brew install stow pkg-config imagemagick tmux neovim gh lazygit ripgrep go rust
 brew install --cask kitty keymapp shottr bentobox maccy
 ```
 
