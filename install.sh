@@ -4,8 +4,8 @@
 
 set -e
 
-BREW_FORMULAE=(stow pkg-config imagemagick)
-BREW_CASKS=(kitty keymapp shottr)
+BREW_FORMULAE=(stow pkg-config imagemagick tmux neovim gh lazygit ripgrep)
+BREW_CASKS=(kitty keymapp shottr bentobox maccy)
 
 # Ensure required Homebrew packages/casks exist
 if command -v brew &> /dev/null; then

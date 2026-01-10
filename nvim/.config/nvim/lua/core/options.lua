@@ -4,7 +4,6 @@ local opt = vim.opt
 
 opt.number = true
 opt.relativenumber = true
-opt.number = true
 
 opt.splitbelow = true
 opt.splitright = true
@@ -36,5 +35,3 @@ opt.background = "dark"
 opt.signcolumn = "yes"
 
 opt.backspace = "indent,eol,start"
-
-

@@ -13,9 +13,16 @@ Install the following via Homebrew:
 brew install stow
 brew install pkg-config
 brew install imagemagick
+brew install tmux
+brew install neovim
+brew install gh
+brew install lazygit
+brew install ripgrep
 brew install --cask kitty
 brew install --cask keymapp
 brew install --cask shottr
+brew install --cask bentobox
+brew install --cask maccy
 ```
 
 ## Installation
@@ -145,12 +152,21 @@ The following packages are required:
 - `stow` - Symlink manager for dotfiles
 - `pkg-config` - Required for building `telescope-fzf-native.nvim`
 - `imagemagick` - Required for `image.nvim` plugin (LuaRocks magick package)
+- `tmux` - Terminal multiplexer
+- `neovim` - Editor
+- `gh` - GitHub CLI (required by `octo.nvim`)
+- `lazygit` - TUI for Git (used by `lazygit.nvim`)
+- `ripgrep` - Fast grep backend (used by Telescope `live_grep`)
 - `kitty` (cask) - GPU-accelerated terminal emulator
 - `keymapp` (cask) - Desktop app for configuring ZSA keyboards
 - `shottr` (cask) - Screenshot/annotation utility for fast screen captures
+- `bentobox` (cask) - App containerization/menubar utility
+- `maccy` (cask) - Clipboard manager
 
 Install all at once:
 ```bash
-brew install stow pkg-config imagemagick
-brew install --cask kitty keymapp shottr
+brew install stow pkg-config imagemagick tmux neovim gh lazygit ripgrep
+brew install --cask kitty keymapp shottr bentobox maccy
 ```
+
+For `octo.nvim`, authenticate once with `gh auth login` (or set `GITHUB_TOKEN`, sometimes needing `read:org`).

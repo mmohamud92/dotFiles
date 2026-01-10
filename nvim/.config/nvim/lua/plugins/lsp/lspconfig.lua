@@ -1,19 +1,18 @@
 return {
-    "hrsh7th/cmp-nvim-lsp",
-    event = { "BufReadPre", "BufNewFile" },
-    dependencies = {
-        { "antosha417/nvim-lsp-file-operations", config = true },
-        { "folke/lazydev.nvim", opts = {} },
-    },
-    config = function()
-        -- import cmp-nvim-lsp plugin
-        local cmp_nvim_lsp = require("cmp_nvim_lsp")
-
-        -- used to enable autocompletion (assign to every lsp server config)
-        local capabilities = cmp_nvim_lsp.default_capabilities()
-
-        vim.lsp.config("*", {
-            capabilities = capabilities,
-        })
-    end,
+	"neovim/nvim-lspconfig",
+	event = { "BufReadPre", "BufNewFile" },
+	dependencies = { "saghen/blink.cmp" },
+	opts = {
+		servers = {
+			gopls = {},
+		},
+	},
+	config = function(_, opts)
+		local lspconfig = require("lspconfig")
+		for server, config in pairs(opts.servers) do
+			config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
+			lspconfig[server].setup(config)
+		end
+	end,
 }
+

@@ -85,6 +85,22 @@ Telescope insert-mode mappings inside pickers:
 | `<leader>hd` / `<leader>hD` | Diff against index / HEAD~ |
 | `ih` (text object) | Select current hunk in operator/visual mode |
 
+### Git (vim-fugitive)
+| Keys | Action |
+| --- | --- |
+| `<leader>gg` | Git status (Fugitive) |
+| `<leader>gc` | Git commit |
+| `<leader>gp` / `<leader>gP` | Git push / pull --rebase |
+| `<leader>gb` | Git blame |
+| `<leader>gd` | Git diff (vertical split) |
+| `<leader>gl` | Git log |
+| `<leader>lg` | LazyGit (TUI) |
+
+### GitHub (octo.nvim)
+| Keys | Action |
+| --- | --- |
+| `<leader>O` | Open Octo command palette |
+
 ### Todo comments
 - `]t` / `[t` jump to next / previous TODO-style comment anywhere in the buffer.
 

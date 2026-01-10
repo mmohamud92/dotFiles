@@ -11,6 +11,11 @@ return {
         wk.setup({})
 
         wk.add({
+            { "<leader>g", group = "git" },
+            { "<leader>h", group = "git hunks" },
+        })
+
+        wk.add({
             { "c", group = "change" },
             { "ca", group = "around textobj" },
             { "ci", group = "inside textobj" },
