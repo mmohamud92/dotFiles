@@ -14,5 +14,13 @@ for _, path in ipairs(candidates) do
     end
 end
 
-return require("nvim-treesitter.config")
+local data_dir = vim.fn.stdpath("data")
+local ts_rtp = data_dir .. "/lazy/nvim-treesitter"
+local configs_path = ts_rtp .. "/lua/nvim-treesitter/configs.lua"
+local uv = vim.uv or vim.loop
 
+if uv.fs_stat(configs_path) then
+    return dofile(configs_path)
+end
+
+return require("nvim-treesitter.config")

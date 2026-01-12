@@ -3,6 +3,17 @@ return {
     -- nvim-treesitter recommends not lazy-loading; load at startup for reliability.
     lazy = false,
     build = ":TSUpdate",
+    init = function()
+        local data_dir = vim.fn.stdpath("data")
+        local ts_rtp = data_dir .. "/lazy/nvim-treesitter"
+        local uv = vim.uv or vim.loop
+        if uv.fs_stat(ts_rtp) then
+            local rtp = vim.opt.rtp:get()
+            if not vim.tbl_contains(rtp, ts_rtp) then
+                vim.opt.rtp:prepend(ts_rtp)
+            end
+        end
+    end,
     opts = {
         -- Parsers to keep installed on all machines.
         ensure_installed = {
