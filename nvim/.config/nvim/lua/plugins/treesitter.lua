@@ -1,5 +1,8 @@
 return {
     "nvim-treesitter/nvim-treesitter",
+    -- nvim-treesitter-textobjects still depends on the legacy `nvim-treesitter.configs` + modules API.
+    -- Pin treesitter to the last commit before modules were removed.
+    commit = "310f0925ec64c7e54f3ee952679d285b13e5a735",
     -- nvim-treesitter recommends not lazy-loading; load at startup for reliability.
     lazy = false,
     build = ":TSUpdate",
@@ -85,8 +88,11 @@ return {
         },
     },
     config = function(_, opts)
-        local ok, configs = pcall(require, "nvim-treesitter.configs")
-        if not ok or type(configs) ~= "table" or type(configs.setup) ~= "function" then
+        local ok, treesitter = pcall(require, "nvim-treesitter")
+        if not ok then
+            ok, treesitter = pcall(require, "nvim-treesitter.configs")
+        end
+        if not ok or type(treesitter) ~= "table" or type(treesitter.setup) ~= "function" then
             if #vim.api.nvim_list_uis() > 0 then
                 vim.schedule(function()
                     vim.notify(
@@ -101,7 +107,7 @@ return {
             return
         end
 
-        configs.setup(opts)
+        treesitter.setup(opts)
 
         -- Use bash parser for zsh files.
         vim.treesitter.language.register("bash", "zsh")
