@@ -3,17 +3,6 @@ return {
     -- nvim-treesitter recommends not lazy-loading; load at startup for reliability.
     lazy = false,
     build = ":TSUpdate",
-    init = function()
-        local data_dir = vim.fn.stdpath("data")
-        local ts_rtp = data_dir .. "/lazy/nvim-treesitter"
-        local uv = vim.uv or vim.loop
-        if uv.fs_stat(ts_rtp) then
-            local rtp = vim.opt.rtp:get()
-            if not vim.tbl_contains(rtp, ts_rtp) then
-                vim.opt.rtp:prepend(ts_rtp)
-            end
-        end
-    end,
     opts = {
         -- Parsers to keep installed on all machines.
         ensure_installed = {
@@ -96,21 +85,23 @@ return {
         },
     },
     config = function(_, opts)
-        local ok, config = pcall(require, "nvim-treesitter.configs")
-        if not ok then
-            ok, config = pcall(require, "nvim-treesitter.config")
-        end
-
-        if not ok or type(config) ~= "table" or type(config.setup) ~= "function" then
+        local ok, configs = pcall(require, "nvim-treesitter.configs")
+        if not ok or type(configs) ~= "table" or type(configs.setup) ~= "function" then
             if #vim.api.nvim_list_uis() > 0 then
                 vim.schedule(function()
-                    vim.notify("nvim-treesitter: failed to load. Run :Lazy sync, then restart Neovim.", vim.log.levels.WARN)
+                    vim.notify(
+                        "nvim-treesitter: failed to load. This usually means the plugin install is corrupted.\n"
+                            .. "Fix: rm -rf "
+                            .. vim.fn.stdpath("data")
+                            .. "/lazy/nvim-treesitter then run :Lazy sync and restart.",
+                        vim.log.levels.ERROR
+                    )
                 end)
             end
             return
         end
 
-        config.setup(opts)
+        configs.setup(opts)
 
         -- Use bash parser for zsh files.
         vim.treesitter.language.register("bash", "zsh")
