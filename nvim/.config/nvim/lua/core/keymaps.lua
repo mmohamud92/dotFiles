@@ -12,6 +12,7 @@ keymap.set("n", "<leader>-", "<C-x>", { desc = "Decrement number" }) -- decremen
 -- LSP
 keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, { desc = "Code actions" })
 keymap.set("n", "<leader>cr", vim.lsp.buf.rename, { desc = "Rename symbol" })
+keymap.set("n", "gd", vim.lsp.buf.definition, { desc = "Go to definition" })
 
 -- window management
 keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" }) -- split window vertically
