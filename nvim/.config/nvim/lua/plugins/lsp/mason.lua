@@ -43,6 +43,7 @@ return {
 				"cucumber_language_server",
 				"gopls",
 				"astro",
+				"buf_ls",
 			}
 
 			local capabilities = vim.lsp.protocol.make_client_capabilities()

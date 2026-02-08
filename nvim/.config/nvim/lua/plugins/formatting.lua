@@ -38,10 +38,23 @@ return {
                 liquid = { "prettier" },
                 lua = { "stylua" },
                 python = { "isort", "black" },
+                proto = { "buf" },
             },
             formatters = {
                 ["goimports-reviser"] = {
                     cwd = util.root_file({ "go.mod" }),
+                },
+                ["golines"] = {
+                    args = {
+                        "--max-len=120",
+                        "--base-formatter=gofmt",
+                        "--shorten-comments",
+                    },
+                },
+                ["buf"] = {
+                    command = "buf",
+                    args = { "format", "$FILENAME" },
+                    stdin = false,
                 },
             },
             format_on_save = {
@@ -58,5 +71,14 @@ return {
                 timeout_ms = 1000,
             })
         end, { desc = "Format file or range (in visual mode)" })
+
+        -- Manual full Go formatting chain
+        vim.keymap.set("n", "<leader>F", function()
+            conform.format({
+                lsp_fallback = true,
+                async = false,
+                timeout_ms = 3000,
+            })
+        end, { desc = "Format file (full chain)" })
     end,
 }

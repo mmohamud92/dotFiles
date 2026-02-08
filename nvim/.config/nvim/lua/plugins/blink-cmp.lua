@@ -27,6 +27,8 @@ return {
             },
             accept = {
                 -- Give LSP resolve time to return `additionalTextEdits` (e.g. Go auto-imports like `fmt`).
+                -- This waits for the LSP to provide import statements before inserting.
+                auto_brackets = { enabled = true },
                 resolve_timeout_ms = 500,
             },
             menu = { border = "single", auto_show = true },

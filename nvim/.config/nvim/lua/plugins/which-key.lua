@@ -14,9 +14,14 @@ return {
             { "<leader>c", group = "code" },
             { "<leader>g", group = "git" },
             { "<leader>h", group = "git hunks" },
+            { "<leader>l", group = "lazygit" },
+            { "<leader>m", group = "move" },
         })
 
         wk.add({
+            { "g", group = "goto/operators" },
+            { "gc", desc = "toggle comment" },
+            { "gcc", desc = "toggle comment line" },
             { "c", group = "change" },
             { "ca", group = "around textobj" },
             { "ci", group = "inside textobj" },

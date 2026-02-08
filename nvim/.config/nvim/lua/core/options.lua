@@ -5,10 +5,29 @@ local opt = vim.opt
 opt.number = true
 opt.relativenumber = true
 
+opt.swapfile = false
+
+-- Auto-save current buffer every 5 minutes
+local autosave_timer = vim.uv.new_timer()
+autosave_timer:start(
+    300000, -- 5 minutes in ms
+    300000, -- repeat every 5 minutes
+    vim.schedule_wrap(function()
+        local buf = vim.api.nvim_get_current_buf()
+        if vim.bo[buf].modified and vim.bo[buf].modifiable and vim.fn.bufname(buf) ~= "" then
+            vim.api.nvim_buf_call(buf, function()
+                vim.cmd("silent! write")
+            end)
+        end
+    end)
+)
+
 opt.splitbelow = true
 opt.splitright = true
 
-opt.wrap = false
+opt.wrap = true
+opt.linebreak = true -- Wrap at word boundaries
+opt.breakindent = true -- Preserve indentation when wrapping
 
 opt.tabstop = 4
 opt.shiftwidth = 4

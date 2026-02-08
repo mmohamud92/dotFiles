@@ -6,6 +6,8 @@ return {
 
 		lint.linters_by_ft = {
 			python = { "pylint" },
+			go = { "golangcilint" },
+			proto = { "buf_lint" },
 		}
 
 		local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
@@ -60,9 +62,5 @@ return {
 				try_linting()
 			end,
 		})
-
-		vim.keymap.set("n", "<leader>l", function()
-			try_linting()
-		end, { desc = "Trigger linting for current file" })
 	end,
 }

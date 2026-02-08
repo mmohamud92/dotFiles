@@ -10,6 +10,23 @@ return {
 						completeUnimported = true,
 						usePlaceholders = true,
 						staticcheck = true,
+
+						analyses = {
+							-- These are the only analyzers that are disabled by default in gopls.
+							nilness = true,
+							shadow = true,
+							unusedparams = true,
+							unusedwrite = true,
+						},
+					},
+				},
+
+				init_options = {
+					codelenses = {
+						generate = true,
+						gc_details = true,
+						test = true,
+						tidy = true,
 					},
 				},
 			},
@@ -42,6 +59,40 @@ return {
 			if ok_blink and type(blink.get_lsp_capabilities) == "function" then
 				config.capabilities = blink.get_lsp_capabilities(config.capabilities)
 			end
+
+			-- Enable semantic tokens for semantic highlighting
+			-- Make sure we preserve existing capabilities (especially completion resolve)
+			if not config.capabilities then
+				config.capabilities = {}
+			end
+			if not config.capabilities.textDocument then
+				config.capabilities.textDocument = {}
+			end
+			-- Merge semantic tokens without overwriting existing capabilities
+			config.capabilities.textDocument.semanticTokens = vim.tbl_deep_extend("force",
+				config.capabilities.textDocument.semanticTokens or {},
+				{
+					dynamicRegistration = false,
+					requests = {
+						full = { delta = true },
+						range = true,
+					},
+					tokenTypes = {
+						"namespace", "type", "class", "enum", "interface", "struct",
+						"typeParameter", "parameter", "variable", "property", "enumMember",
+						"event", "function", "method", "macro", "keyword", "modifier",
+						"comment", "string", "number", "regexp", "operator", "decorator",
+					},
+					tokenModifiers = {
+						"declaration", "definition", "readonly", "static", "deprecated",
+						"abstract", "async", "modification", "documentation", "defaultLibrary",
+					},
+					formats = { "relative" },
+					overlappingTokenSupport = false,
+					multilineTokenSupport = false,
+				}
+			)
+
 			vim.lsp.config(server, config)
 			vim.lsp.enable(server)
 		end
@@ -50,7 +101,16 @@ return {
 			group = group,
 			callback = function(args)
 				local client = vim.lsp.get_client_by_id(args.data.client_id)
-				if not client or client.name ~= "gopls" then
+				if not client then
+					return
+				end
+
+				-- Enable semantic highlighting for all LSP clients that support it
+				if client.server_capabilities.semanticTokensProvider then
+					vim.lsp.semantic_tokens.start(args.buf, client.id)
+				end
+
+				if client.name ~= "gopls" then
 					return
 				end
 
